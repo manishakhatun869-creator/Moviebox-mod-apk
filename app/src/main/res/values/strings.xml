@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Toefii Musoc</string>
+    <string name="welcome_message">Welcome to Toefii Musoc</string>
+    <string name="now_playing">Now Playing: Peaceful Melodies</string>
+</resources>
