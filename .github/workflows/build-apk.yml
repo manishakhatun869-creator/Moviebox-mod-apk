@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   issues: write
 
 jobs:
@@ -65,10 +65,30 @@ jobs:
             gradle-debug.log
             gradle-release.log
 
-      # Always publish log tails + output listing as a commit comment so they can
-      # be read from environments where Actions log / artifact download is blocked.
+      # Publish the built APKs to an orphan branch so restricted environments that
+      # cannot download Actions artifacts can still retrieve the binaries via git.
+      - name: Publish APKs to orphan branch
+        if: hashFiles('app/build/outputs/apk/debug/app-debug.apk') != ''
+        run: |
+          mkdir -p /tmp/apk
+          cp app/build/outputs/apk/debug/app-debug.apk /tmp/apk/
+          cp app/build/outputs/apk/release/app-release-unsigned.apk /tmp/apk/
+          git config user.name "ci-bot"
+          git config user.email "ci-bot@users.noreply.github.com"
+          git checkout --orphan apk-artifacts
+          git rm -r --cached . >/dev/null 2>&1 || true
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          mkdir -p apks
+          cp /tmp/apk/app-debug.apk apks/
+          cp /tmp/apk/app-release-unsigned.apk apks/
+          git add apks
+          git commit -m "APK artifacts from run ${{ github.run_id }}"
+          git push -f origin apk-artifacts
+
+      # Publish log tails + output listing as an issue when the build did NOT
+      # produce APKs, so they can be read where Actions log download is blocked.
       - name: Publish build report
-        if: always()
+        if: hashFiles('app/build/outputs/apk/debug/app-debug.apk') == ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

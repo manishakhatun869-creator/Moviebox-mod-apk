@@ -134,17 +134,20 @@ class PremiumFragment : Fragment() {
         (requireActivity() as? com.towfik.music.MainActivity)?.refreshPremiumBadge()
     }
 
-    private fun price(details: ProductDetails?): String? = runCatching {
-        details ?: return null
-        if (details.productType == com.android.billingclient.api.BillingClient.ProductType.INAPP) {
-            details.oneTimePurchasePriceFormatted
-        } else {
-            details.subscriptionOfferDetails
-                ?.firstOrNull()
-                ?.pricingPhases
-                ?.pricingPhaseList
-                ?.firstOrNull()
-                ?.formattedPrice
-        }
-    }.getOrNull()
+    // Read via reflection so this compiles against any billing artifact version.
+    private fun price(details: ProductDetails?): String? {
+        if (details == null) return null
+        return runCatching {
+            details.javaClass.getMethod("getOneTimePurchasePriceFormatted")
+                .invoke(details) as? String
+        }.getOrNull() ?: runCatching {
+            val offers = details.javaClass.getMethod("getSubscriptionOfferDetails")
+                .invoke(details) as? List<*>
+            val first = offers?.firstOrNull() ?: return@runCatching null
+            val phases = first?.javaClass?.getMethod("getPricingPhases")?.invoke(first)
+            val phaseList = phases?.javaClass?.getMethod("getPricingPhaseList")?.invoke(phases) as? List<*>
+            phaseList?.firstOrNull()?.javaClass?.getMethod("getFormattedPrice")
+                ?.invoke(phaseList.firstOrNull()) as? String
+        }.getOrNull()
+    }
 }

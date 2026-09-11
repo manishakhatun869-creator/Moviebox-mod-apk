@@ -2,6 +2,7 @@ package com.towfik.music.premium
 
 import android.app.Activity
 import android.content.Context
+import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
@@ -16,12 +17,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
 
 /**
  * Thin wrapper around Google Play Billing that drives [PremiumRepository].
- * Premium is granted only from purchases Play reports as purchased, so the
- * entitlement can never be faked locally.
+ * Uses the stable callback-based BillingClient API. Premium is granted only
+ * from purchases Play reports as purchased, so it can never be faked locally.
  */
 class BillingManager(
     context: Context,
@@ -111,49 +114,60 @@ class BillingManager(
         client.endConnection()
     }
 
-    // ---- PurchasesUpdatedListener ----
     override fun onPurchasesUpdated(result: BillingResult, purchases: List<Purchase>?) {
         when (result.responseCode) {
-            BillingClient.BillingResponseCode.OK -> {
-                handlePurchases(purchases.orEmpty())
-            }
-            BillingClient.BillingResponseCode.USER_CANCELED -> {
-                // no-op; UI reacts via callback
-            }
+            BillingClient.BillingResponseCode.OK -> handlePurchases(purchases.orEmpty())
+            BillingClient.BillingResponseCode.USER_CANCELED -> { /* UI reacts via callback */ }
         }
     }
 
     // ---- internals ----
 
+    private suspend fun queryProductDetails(type: String): List<ProductDetails> =
+        suspendCancellableCoroutine { cont ->
+            val products = Plan.entries.map { plan ->
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(plan.productId)
+                    .setProductType(type)
+                    .build()
+            }
+            val params = QueryProductDetailsParams.newBuilder().setProductList(products).build()
+            client.queryProductDetailsAsync(params) { result, list ->
+                if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                    cont.resume(list.orEmpty())
+                } else {
+                    cont.resume(emptyList())
+                }
+            }
+        }
+
     private suspend fun queryPlans(): Map<Plan, ProductDetails> {
         val out = mutableMapOf<Plan, ProductDetails>()
         for (type in listOf(BillingClient.ProductType.SUBS, BillingClient.ProductType.INAPP)) {
-            val products = Plan.entries
-                .map { plan ->
-                    QueryProductDetailsParams.Product.newBuilder()
-                        .setProductId(plan.productId)
-                        .setProductType(type)
-                        .build()
-                }
-            val params = QueryProductDetailsParams.newBuilder().setProductList(products).build()
-            val result = withContext(Dispatchers.IO) { client.queryProductDetailsAsync(params) }
-            if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                result.productDetailsList?.forEach { details ->
-                    Plan.fromProductId(details.productId)?.let { out[it] = details }
-                }
+            val list = withContext(Dispatchers.IO) { queryProductDetails(type) }
+            list.forEach { details ->
+                Plan.fromProductId(details.productId)?.let { out[it] = details }
             }
         }
         return out
     }
 
+    private suspend fun queryPurchases(type: String): List<Purchase> =
+        suspendCancellableCoroutine { cont ->
+            val params = QueryPurchasesParams.newBuilder().setProductType(type).build()
+            client.queryPurchasesAsync(params) { result, list ->
+                if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                    cont.resume(list.orEmpty())
+                } else {
+                    cont.resume(emptyList())
+                }
+            }
+        }
+
     private suspend fun queryAllPurchases(): List<Purchase> {
         val out = mutableListOf<Purchase>()
         for (type in listOf(BillingClient.ProductType.SUBS, BillingClient.ProductType.INAPP)) {
-            val params = QueryPurchasesParams.newBuilder().setProductType(type).build()
-            val result = withContext(Dispatchers.IO) { client.queryPurchasesAsync(params) }
-            if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                out += result.purchasesList.orEmpty()
-            }
+            out += withContext(Dispatchers.IO) { queryPurchases(type) }
         }
         return out
     }
@@ -176,12 +190,10 @@ class BillingManager(
     }
 
     private fun acknowledge(purchase: Purchase) {
-        scope.launch {
-            val params = com.android.billingclient.api.AcknowledgePurchaseParams.newBuilder()
-                .setPurchaseToken(purchase.purchaseToken)
-                .build()
-            withContext(Dispatchers.IO) { client.acknowledgePurchase(params) }
-        }
+        val params = AcknowledgePurchaseParams.newBuilder()
+            .setPurchaseToken(purchase.purchaseToken)
+            .build()
+        client.acknowledgePurchase(params) { _ -> }
     }
 
     private suspend fun restoreEntitlement() {
