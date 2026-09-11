@@ -174,7 +174,7 @@ class PlaybackService : Service() {
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .build()
         )
-        mp.setWakeMode(android.os.PowerManager.PARTIAL_WAKE_LOCK)
+        mp.setWakeMode(this, android.os.PowerManager.PARTIAL_WAKE_LOCK)
         mp.setOnPreparedListener { p ->
             p.start()
             updateState(playing = true)
