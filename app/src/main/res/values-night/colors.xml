@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Night -->
+    <color name="background">#0B0A12</color>
+    <color name="surface">#17152A</color>
+    <color name="surface_variant">#221E3A</color>
+    <color name="on_background">#F2EFFF</color>
+    <color name="on_surface">#F2EFFF</color>
+    <color name="on_surface_muted">#A79FC7</color>
+    <color name="outline">#332E4F</color>
+    <color name="player_bar">#17152A</color>
+
+    <color name="primary">#A98BFF</color>
+    <color name="on_primary">#1B0B3E</color>
+    <color name="primary_container">#3A2A73</color>
+    <color name="on_primary_container">#EDE4FF</color>
+</resources>

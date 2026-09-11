@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/miniPlayerRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_mini_player"
+    android:padding="@dimen/space_sm">
+
+    <ImageView
+        android:id="@+id/miniArt"
+        android:layout_width="@dimen/art_thumb"
+        android:layout_height="@dimen/art_thumb"
+        android:background="@drawable/bg_art_placeholder"
+        android:contentDescription="@string/now_playing"
+        android:padding="12dp"
+        android:src="@drawable/ic_music_note"
+        app:tint="@color/primary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/miniTitle"
+        style="@style/TextAppearance.TowfikMusic.TrackTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_md"
+        android:layout_marginEnd="@dimen/space_sm"
+        android:text="@string/nothing_playing"
+        app:layout_constraintStart_toEndOf="@id/miniArt"
+        app:layout_constraintEnd_toStartOf="@id/miniPlay"
+        app:layout_constraintTop_toTopOf="@id/miniArt"
+        app:layout_constraintBottom_toTopOf="@id/miniArtist"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/miniArtist"
+        style="@style/TextAppearance.TowfikMusic.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_md"
+        android:layout_marginEnd="@dimen/space_sm"
+        android:layout_marginTop="2dp"
+        android:text="@string/app_tagline"
+        app:layout_constraintStart_toEndOf="@id/miniArt"
+        app:layout_constraintEnd_toStartOf="@id/miniPlay"
+        app:layout_constraintTop_toBottomOf="@id/miniTitle"
+        app:layout_constraintBottom_toBottomOf="@id/miniArt" />
+
+    <ImageView
+        android:id="@+id/miniPlay"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/play"
+        android:padding="8dp"
+        android:src="@drawable/ic_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.ToefiiMusoc" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">#6200EE</item>
-        <item name="colorPrimaryVariant">#3700B3</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorSecondary">#03DAC6</item>
-        <item name="colorSecondaryVariant">#018786</item>
-        <item name="colorOnSecondary">#000000</item>
+
+    <style name="Theme.TowfikMusic" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/on_background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_muted</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.TowfikMusic.Dialog</item>
+    </style>
+
+    <style name="ThemeOverlay.TowfikMusic.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.TowfikMusic.DialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.TowfikMusic.DialogButton</item>
+    </style>
+
+    <style name="Widget.TowfikMusic.DialogButton" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <!-- Typography -->
+    <style name="TextAppearance.TowfikMusic.Display" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textColor">@color/on_background</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.TowfikMusic.Section" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textColor">@color/on_surface_muted</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextAppearance.TowfikMusic.TrackTitle" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TextAppearance.TowfikMusic.Caption" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/on_surface_muted</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- Components -->
+    <style name="Widget.TowfikMusic.Card" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/outline</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Widget.TowfikMusic.Card.Premium" parent="Widget.TowfikMusic.Card">
+        <item name="cardBackgroundColor">@color/primary_container</item>
+        <item name="strokeColor">@color/secondary</item>
+    </style>
+
+    <style name="Widget.TowfikMusic.Button.Premium" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/secondary</item>
+        <item name="android:textColor">@color/on_secondary</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.TowfikMusic.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">12dp</item>
+    </style>
+
+    <style name="Widget.TowfikMusic.SeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressTint">@color/primary</item>
+        <item name="android:thumbTint">@color/primary</item>
+        <item name="android:progressBackgroundTint">@color/outline</item>
     </style>
 </resources>

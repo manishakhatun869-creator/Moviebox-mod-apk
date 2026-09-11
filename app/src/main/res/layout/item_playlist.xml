@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/playlistCard"
+    style="@style/Widget.TowfikMusic.Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_sm">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_md">
+
+        <ImageView
+            android:id="@+id/playlistArt"
+            android:layout_width="@dimen/art_thumb"
+            android:layout_height="@dimen/art_thumb"
+            android:background="@drawable/bg_art_placeholder"
+            android:contentDescription="@string/nav_playlists"
+            android:padding="12dp"
+            android:src="@drawable/ic_playlists"
+            app:tint="@color/primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/playlistName"
+            style="@style/TextAppearance.TowfikMusic.TrackTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_sm"
+            app:layout_constraintStart_toEndOf="@id/playlistArt"
+            app:layout_constraintEnd_toStartOf="@id/deletePlaylist"
+            app:layout_constraintTop_toTopOf="@id/playlistArt"
+            app:layout_constraintBottom_toTopOf="@id/playlistCount"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/playlistCount"
+            style="@style/TextAppearance.TowfikMusic.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_marginEnd="@dimen/space_sm"
+            android:layout_marginTop="2dp"
+            app:layout_constraintStart_toEndOf="@id/playlistArt"
+            app:layout_constraintEnd_toStartOf="@id/deletePlaylist"
+            app:layout_constraintTop_toBottomOf="@id/playlistName"
+            app:layout_constraintBottom_toBottomOf="@id/playlistArt" />
+
+        <ImageView
+            android:id="@+id/deletePlaylist"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/playlist_delete"
+            android:padding="8dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/on_surface_muted"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

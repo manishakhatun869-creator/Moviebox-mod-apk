@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand -->
+    <color name="brand_violet">#7C4DFF</color>
+    <color name="brand_violet_dark">#5A2FD6</color>
+    <color name="brand_gold">#FFC24B</color>
+    <color name="brand_ink">#0B0A12</color>
+
+    <!-- Day -->
+    <color name="background">#F6F4FF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#EDE9FE</color>
+    <color name="on_background">#141226</color>
+    <color name="on_surface">#141226</color>
+    <color name="on_surface_muted">#5F5B78</color>
+    <color name="outline">#D9D4F0</color>
+    <color name="player_bar">#FFFFFF</color>
+
+    <!-- Semantic -->
+    <color name="primary">#7C4DFF</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#E9DEFF</color>
+    <color name="on_primary_container">#2B0A6B</color>
+    <color name="secondary">#FFC24B</color>
+    <color name="on_secondary">#3A2700</color>
+    <color name="danger">#D6455D</color>
+
+    <!-- Now playing artwork placeholder -->
+    <color name="art_placeholder">#2A2140</color>
+    <color name="scrim">#99000000</color>
+
+    <color name="ic_launcher_background">#1A1033</color>
+</resources>

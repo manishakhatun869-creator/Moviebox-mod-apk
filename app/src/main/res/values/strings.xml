@@ -1,5 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Toefii Musoc</string>
-    <string name="welcome_message">Welcome to Toefii Musoc</string>
-    <string name="now_playing">Now Playing: Peaceful Melodies</string>
+    <string name="app_name">Towfik Music</string>
+    <string name="app_tagline">Your library. Your sound.</string>
+
+    <!-- Navigation -->
+    <string name="nav_library">Library</string>
+    <string name="nav_playlists">Playlists</string>
+    <string name="nav_premium">Premium</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Library -->
+    <string name="library_title">Library</string>
+    <string name="library_subtitle">%1$d tracks on this device</string>
+    <string name="library_search_hint">Search tracks, artists or albums</string>
+    <string name="library_empty_title">No audio found</string>
+    <string name="library_empty_body">Grant access to your audio files and Towfik Music will index the music already on your device.</string>
+    <string name="library_permission_needed">Towfik Music needs permission to read the audio stored on this device.</string>
+    <string name="library_grant">Grant access</string>
+    <string name="library_no_match">Nothing matches that search.</string>
+
+    <!-- Playback -->
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="next_track">Next</string>
+    <string name="previous_track">Previous</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="repeat">Repeat</string>
+    <string name="now_playing">Now playing</string>
+    <string name="nothing_playing">Nothing playing yet</string>
+    <string name="queue_position">%1$d of %2$d</string>
+    <string name="elapsed_time">Elapsed</string>
+    <string name="remaining_time">Remaining</string>
+
+    <!-- Playlists -->
+    <string name="playlists_title">Playlists</string>
+    <string name="playlists_subtitle">%1$d of %2$d playlists used</string>
+    <string name="playlists_new">New playlist</string>
+    <string name="playlists_empty_title">No playlists yet</string>
+    <string name="playlists_empty_body">Create a playlist to keep your favourite tracks together.</string>
+    <string name="playlist_name_hint">Playlist name</string>
+    <string name="playlist_create">Create</string>
+    <string name="playlist_cancel">Cancel</string>
+    <string name="playlist_limit_title">Free plan limit reached</string>
+    <string name="playlist_limit_body">The free plan includes %1$d playlists. Upgrade to Premium for unlimited playlists.</string>
+    <string name="playlist_added_to">Added to %1$s</string>
+    <string name="playlist_add_to">Add to playlist</string>
+    <string name="playlist_deleted">Playlist deleted</string>
+    <string name="playlist_delete">Delete playlist</string>
+    <string name="playlist_track_count">%1$d tracks</string>
+
+    <!-- Premium -->
+    <string name="premium_title">Premium</string>
+    <string name="premium_headline">Unlock everything</string>
+    <string name="premium_subhead">Towfik Music Premium is a real subscription purchased through Google Play. Nothing here is bypassed or unlocked for free.</string>
+    <string name="premium_feature_playlists">Unlimited playlists</string>
+    <string name="premium_feature_eq">Equalizer</string>
+    <string name="premium_feature_speed">Playback speed control</string>
+    <string name="premium_feature_themes">Premium accent themes</string>
+    <string name="premium_feature_sleep">Sleep timer</string>
+    <string name="premium_feature_gapless">Gapless queue and priority support</string>
+    <string name="premium_plan_monthly">Monthly</string>
+    <string name="premium_plan_yearly">Yearly</string>
+    <string name="premium_plan_lifetime">Lifetime</string>
+    <string name="premium_price_loading">Loading price…</string>
+    <string name="premium_subscribe">Subscribe</string>
+    <string name="premium_purchase">Purchase</string>
+    <string name="premium_restore">Restore purchases</string>
+    <string name="premium_active_title">Premium is active</string>
+    <string name="premium_active_body">Every Premium feature is unlocked on this device. Thank you for supporting Towfik Music.</string>
+    <string name="premium_manage">Manage subscription</string>
+    <string name="premium_locked_badge">Premium</string>
+    <string name="premium_locked_title">Premium feature</string>
+    <string name="premium_locked_body">This feature is part of Towfik Music Premium.</string>
+    <string name="premium_billing_unavailable">Google Play Billing is not available on this device, so purchases cannot be completed right now.</string>
+    <string name="premium_purchase_cancelled">Purchase cancelled.</string>
+    <string name="premium_purchase_failed">Purchase did not complete. You have not been charged.</string>
+    <string name="premium_restored">Purchases restored.</string>
+    <string name="premium_nothing_to_restore">No previous purchase found on this Google account.</string>
+    <string name="premium_connecting">Connecting to Google Play…</string>
+    <string name="premium_per_month">per month</string>
+    <string name="premium_per_year">per year</string>
+    <string name="premium_once">one time</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_playback">Playback</string>
+    <string name="settings_equalizer">Equalizer</string>
+    <string name="settings_speed">Playback speed</string>
+    <string name="settings_sleep_timer">Sleep timer</string>
+    <string name="settings_theme">Accent theme</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version %1$s</string>
+    <string name="settings_legal">Towfik Music plays audio files that are already stored on your device. It does not download, stream or redistribute copyrighted content.</string>
+    <string name="settings_sleep_off">Off</string>
+    <string name="settings_sleep_set">Ends playback in %1$d minutes</string>
+    <string name="settings_theme_violet">Violet</string>
+    <string name="settings_theme_gold">Gold</string>
+    <string name="settings_theme_teal">Teal</string>
+
+    <!-- Common -->
+    <string name="upgrade_now">Upgrade now</string>
+    <string name="not_now">Not now</string>
+    <string name="unknown_artist">Unknown artist</string>
+    <string name="unknown_album">Unknown album</string>
+    <string name="channel_playback_name">Playback</string>
+    <string name="channel_playback_description">Shows what is currently playing.</string>
 </resources>

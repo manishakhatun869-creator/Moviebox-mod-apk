@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Toefii Musoc"
+rootProject.name = "Towfik Music"
 include ':app'

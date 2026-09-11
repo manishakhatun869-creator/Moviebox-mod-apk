@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="@dimen/space_lg">
+
+    <View
+        android:id="@+id/dragHandle"
+        android:layout_width="48dp"
+        android:layout_height="4dp"
+        android:background="@color/outline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/npHeader"
+        style="@style/TextAppearance.TowfikMusic.Section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:text="@string/now_playing"
+        app:layout_constraintTop_toBottomOf="@id/dragHandle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/npArt"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/art_hero"
+        android:layout_marginTop="@dimen/space_lg"
+        android:background="@drawable/bg_art_placeholder"
+        android:contentDescription="@string/now_playing"
+        android:padding="72dp"
+        android:src="@drawable/ic_music_note"
+        app:tint="@color/primary"
+        app:layout_constraintTop_toBottomOf="@id/npHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/npTitle"
+        style="@style/TextAppearance.TowfikMusic.Display"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_lg"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@id/npArt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/npArtist"
+        style="@style/TextAppearance.TowfikMusic.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        app:layout_constraintTop_toBottomOf="@id/npTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seek"
+        style="@style/Widget.TowfikMusic.SeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_lg"
+        app:layout_constraintTop_toBottomOf="@id/npArtist"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/timeElapsed"
+        style="@style/TextAppearance.TowfikMusic.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        app:layout_constraintTop_toBottomOf="@id/seek"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/timeRemaining"
+        style="@style/TextAppearance.TowfikMusic.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        app:layout_constraintTop_toBottomOf="@id/seek"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnShuffle"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/shuffle"
+        android:padding="8dp"
+        android:src="@drawable/ic_shuffle"
+        app:tint="@color/on_surface_muted"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnPrev"
+        app:layout_constraintTop_toTopOf="@id/btnPlayPause"
+        app:layout_constraintBottom_toBottomOf="@id/btnPlayPause" />
+
+    <ImageView
+        android:id="@+id/btnPrev"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/previous_track"
+        android:padding="10dp"
+        android:src="@drawable/ic_skip_previous"
+        app:layout_constraintStart_toEndOf="@id/btnShuffle"
+        app:layout_constraintEnd_toStartOf="@id/btnPlayPause"
+        app:layout_constraintTop_toTopOf="@id/btnPlayPause"
+        app:layout_constraintBottom_toBottomOf="@id/btnPlayPause" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnPlayPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_lg"
+        android:contentDescription="@string/play"
+        app:srcCompat="@drawable/ic_play"
+        app:backgroundTint="@color/primary"
+        app:tint="@color/on_primary"
+        app:layout_constraintTop_toBottomOf="@id/timeElapsed"
+        app:layout_constraintStart_toEndOf="@id/btnPrev"
+        app:layout_constraintEnd_toStartOf="@id/btnNext" />
+
+    <ImageView
+        android:id="@+id/btnNext"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/next_track"
+        android:padding="10dp"
+        android:src="@drawable/ic_skip_next"
+        app:layout_constraintStart_toEndOf="@id/btnPlayPause"
+        app:layout_constraintEnd_toStartOf="@id/btnRepeat"
+        app:layout_constraintTop_toTopOf="@id/btnPlayPause"
+        app:layout_constraintBottom_toBottomOf="@id/btnPlayPause" />
+
+    <ImageView
+        android:id="@+id/btnRepeat"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/repeat"
+        android:padding="8dp"
+        android:src="@drawable/ic_repeat"
+        app:tint="@color/on_surface_muted"
+        app:layout_constraintStart_toEndOf="@id/btnNext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnPlayPause"
+        app:layout_constraintBottom_toBottomOf="@id/btnPlayPause" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
