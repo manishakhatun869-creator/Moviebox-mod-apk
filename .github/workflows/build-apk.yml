@@ -61,24 +61,22 @@ jobs:
             gradle-debug.log
             gradle-release.log
 
-      # Publish a compact failure excerpt as a commit comment so it can be read
-      # from environments where Actions log download is unavailable.
-      - name: Publish failure excerpt
+      # Always publish log tails + output listing as a commit comment so they can
+      # be read from environments where Actions log / artifact download is blocked.
+      - name: Publish build report
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           {
-            echo "=== tests ==="; grep -E "error:|e: |FAILED|What went wrong" gradle-tests.log | head -40 || true
-            echo "=== debug ==="; grep -E "error:|e: |FAILED|What went wrong" gradle-debug.log | head -40 || true
-            echo "=== release ==="; grep -E "error:|e: |FAILED|What went wrong" gradle-release.log | head -40 || true
+            echo "=== outputs tree ==="
+            ls -R app/build/outputs 2>/dev/null || echo "(no outputs dir)"
+            echo "=== tests tail ==="; tail -n 30 gradle-tests.log 2>/dev/null || true
+            echo "=== debug tail ==="; tail -n 30 gradle-debug.log 2>/dev/null || true
+            echo "=== release tail ==="; tail -n 30 gradle-release.log 2>/dev/null || true
           } > combined.log
-          if grep -q "error:\|e: \|FAILED\|What went wrong" combined.log; then
-            curl -s -X POST \
-              -H "Authorization: token $GH_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments" \
-              --data-binary @<(jq -Rs '{body: .}' < combined.log)
-          else
-            echo "BUILD_OK"
-          fi
+          curl -s -X POST \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments" \
+            --data-binary @<(jq -Rs '{body: .}' < combined.log)
