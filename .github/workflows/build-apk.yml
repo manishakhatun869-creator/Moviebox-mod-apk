@@ -29,22 +29,56 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run unit tests
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew testDebugUnitTest --console=plain > gradle-tests.log 2>&1 || echo "TESTS_FAILED"
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --console=plain > gradle-debug.log 2>&1 || echo "DEBUG_FAILED"
 
       - name: Build Release APK
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleRelease --console=plain > gradle-release.log 2>&1 || echo "RELEASE_FAILED"
 
       - name: Upload Debug APK
+        if: hashFiles('app/build/outputs/apk/debug/app-debug.apk') != ''
         uses: actions/upload-artifact@v4
         with:
           name: towfik-music-debug
           path: app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload Release APK
+        if: hashFiles('app/build/outputs/apk/release/app-release-unsigned.apk') != ''
         uses: actions/upload-artifact@v4
         with:
           name: towfik-music-release-unsigned
           path: app/build/outputs/apk/release/app-release-unsigned.apk
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: |
+            gradle-tests.log
+            gradle-debug.log
+            gradle-release.log
+
+      # Publish a compact failure excerpt as a commit comment so it can be read
+      # from environments where Actions log download is unavailable.
+      - name: Publish failure excerpt
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            echo "=== tests ==="; grep -E "error:|e: |FAILED|What went wrong" gradle-tests.log | head -40 || true
+            echo "=== debug ==="; grep -E "error:|e: |FAILED|What went wrong" gradle-debug.log | head -40 || true
+            echo "=== release ==="; grep -E "error:|e: |FAILED|What went wrong" gradle-release.log | head -40 || true
+          } > combined.log
+          if grep -q "error:\|e: \|FAILED\|What went wrong" combined.log; then
+            curl -s -X POST \
+              -H "Authorization: token $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments" \
+              --data-binary @<(jq -Rs '{body: .}' < combined.log)
+          else
+            echo "BUILD_OK"
+          fi
